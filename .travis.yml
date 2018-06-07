@@ -21,6 +21,14 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DMM_VERSION="$VERSION" ..; fi
   - cmake --build . --target marketmaker-mainnet
   - cmake --build . --target marketmaker-testnet
+  - cd ../iguana
+  - ./m_LP_StaticnanoMsg
+  - make -f m_mm_StaticNanoMsg -j2 all
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DMM_VERSION="$VERSION" ..; fi
+  - cd ../iguana
+  - ./m_mm
+  - cd ..
+  - ./osx_deploy.sh
 
 cache:
   apt: true
@@ -32,7 +40,9 @@ before_deploy:
   - mkdir deploy
   - strip iguana/exchanges/marketmaker-mainnet
   - strip iguana/exchanges/marketmaker-testnet
-  - tar -cvzf deploy/marketmaker-"$TRAVIS_OS_NAME"-"$TAG".tar.gz -C iguana/exchanges marketmaker-mainnet marketmaker-testnet
+  - strip agents/marketmaker
+  - strip ../tmp/marketmaker
+  - tar -cvzf deploy/marketmaker-"$TRAVIS_OS_NAME"-"$TAG".tar.gz -C iguana/exchanges marketmaker-mainnet marketmaker-testnet /$HOME/SuperNET/agents/marketmaker /$HOME/tmp/marketmaker
 deploy:
   provider: releases
   api_key:
