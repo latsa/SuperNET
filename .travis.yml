@@ -21,7 +21,7 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DMM_VERSION="$VERSION" ..; fi
   - cmake --build . --target marketmaker-mainnet
   - cmake --build . --target marketmaker-testnet
-  - cd ../iguana
+  - cd $HOME/SuperNET/iguana
   - ./m_LP_StaticnanoMsg
   - make -f m_mm_StaticNanoMsg -j2 all
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DMM_VERSION="$VERSION" ..; fi
