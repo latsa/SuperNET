@@ -22,7 +22,7 @@ script:
   - cmake --build . --target marketmaker-mainnet
   - cmake --build . --target marketmaker-testnet
   - cd $HOME/SuperNET/iguana
-  - ./m_LP_StaticnanoMsg
+  - ./m_LP_StaticNanoMsg
   - make -f m_mm_StaticNanoMsg -j2 all
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DMM_VERSION="$VERSION" ..; fi
   - cd ../iguana
